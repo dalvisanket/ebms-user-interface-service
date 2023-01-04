@@ -1,0 +1,19 @@
+plugins {
+	id 'java'
+	id 'java-library'
+	id 'org.springframework.boot' version "$spring_boot_version"
+	id 'io.spring.dependency-management' version "$dependency_management_version"
+}
+
+group = 'com.ebms'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '15'
+targetCompatibility = '15'
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+bootJar{
+	enabled = false
+}

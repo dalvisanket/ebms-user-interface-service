@@ -1,0 +1,13 @@
+pluginManagement{
+    plugins{
+        id 'application'
+    }
+}
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+include 'ui-service'
+rootProject.name = 'ebms-user-interface-service'
