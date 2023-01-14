@@ -1,25 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
+import React, {useEffect} from "react";
+import Customer_Detail from "./components/customer_details";
+import {AiFillLinkedin} from 'react-icons/ai'
+import {FaGithubSquare} from "react-icons/fa";
+import {SiPytorchlightning} from "react-icons/si";
+import Navbar from "./components/navbar";
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <React.Fragment>
+          <Navbar/>
+          <Customer_Detail/>
+      </React.Fragment>
+
   );
 }
 
 export default App;
+
