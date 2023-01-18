@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(name = "meter-reading-service",url = "${meter.reading.service.url}")
+@FeignClient(name = "METER-READING-ACQUISITION")
 public interface MeterReadingProxyController {
 
     @PostMapping("/new-meter")
