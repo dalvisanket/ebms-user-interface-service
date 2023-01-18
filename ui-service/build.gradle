@@ -11,6 +11,7 @@ dependencies {
     implementation files("C:/Users/Sanket Dalvi/Documents/meter-reading-acquisition/db/build/libs/db-plain.jar")
     implementation files("C:/Users/Sanket Dalvi/Documents/meter-reading-acquisition/api-domain/build/libs/api-domain-plain.jar")
 
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:$spring_cloud_version"
 
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$spring_cloud_version"
 
