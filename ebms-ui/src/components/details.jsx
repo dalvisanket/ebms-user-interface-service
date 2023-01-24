@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import Testservice from "../services/meter-reading-service";
+import MeterReadingService from "../services/meter-reading-service";
 import {AgGridReact} from "ag-grid-react";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {Dropdown} from "react-bootstrap";
 
-export default class Customer_Detail extends Component{
+export default class Details extends Component{
 
 
     state ={
@@ -16,14 +16,15 @@ export default class Customer_Detail extends Component{
     defaultColumnConfig(){
         return {
             sortable:true,
-            filter:true,
+            filter: 'agTextColumnFilter' ,
+            floatingFilter: true,
             resizable:true,
-            flex:1
+            flex:1,
         };
     }
 
     componentDidMount() {
-        Testservice.getAllConsumers().then((response) =>{
+        MeterReadingService.getAllConsumers().then((response) =>{
             this.setState({rowData : response.data});
             const keys = Object.keys(response.data[0]);
             keys.forEach(key => this.state.columnDefs.push({field : key}));
@@ -31,7 +32,7 @@ export default class Customer_Detail extends Component{
     }
 
     getConsumerData =() =>{
-        Testservice.getAllConsumers().then((response) =>{
+        MeterReadingService.getAllConsumers().then((response) =>{
             this.setState({rowData : response.data});
             const keys = Object.keys(response.data[0]);
             const consumerData =[];
@@ -41,7 +42,7 @@ export default class Customer_Detail extends Component{
     }
 
     getMeterData = () =>{
-        Testservice.getAllMeters().then((response) =>{
+        MeterReadingService.getAllMeters().then((response) =>{
             this.setState({rowData : response.data});
             const keys = Object.keys(response.data[0]);
             const meterData =[];
@@ -50,6 +51,7 @@ export default class Customer_Detail extends Component{
         });
     }
 
+    onCellClicked = (params: CellClickedEvent) => console.log(params.data);
 
     render() {
 
@@ -66,7 +68,7 @@ export default class Customer_Detail extends Component{
                     </Dropdown.Menu>
                 </Dropdown>
 
-                <AgGridReact rowData={this.state.rowData} columnDefs={this.state.columnDefs} defaultColDef={this.defaultColumnConfig()} />
+                <AgGridReact onCellClicked={this.onCellClicked} rowData={this.state.rowData} columnDefs={this.state.columnDefs} defaultColDef={this.defaultColumnConfig()} />
 
             </div>
         );
