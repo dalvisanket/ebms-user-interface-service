@@ -1,5 +1,6 @@
 package com.ebms.ui_service.mtr_rdng.proxy.controller;
 
+import com.ebms.mtr_rdng.db.domain.model.ConsumerMeterRow;
 import com.ebms.mtr_rdng.db.domain.model.ConsumerRow;
 import com.ebms.mtr_rdng.db.domain.model.MeterReadingRow;
 import com.ebms.mtr_rdng.db.domain.model.MeterRow;
@@ -33,4 +34,11 @@ public interface MeterReadingProxyController {
 
     @GetMapping("/get-meter-readings-for-year/{meter_id}/{consumer_id}")
     public ResponseEntity<Map<Year,List<MeterReadingRow>>> getMeterReadingForYear(@PathVariable(name = "meter_id") long meter_id, @PathVariable(name = "consumer_id") long consumer_id);
+
+    @GetMapping("/get-consumer-meter-association/consumer-id/{consumer_id}")
+    public ResponseEntity<List<ConsumerMeterRow>> getAssociationFromConsumerId(@PathVariable(name = "consumer_id") long consumer_id);
+
+    @GetMapping("/get-consumer-meter-association/meter-id/{meter_id}")
+    public ResponseEntity<List<ConsumerMeterRow>> getAssociationFromMeterId( @PathVariable(name = "meter_id") long meter_id);
+
 }

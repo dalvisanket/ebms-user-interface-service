@@ -1,0 +1,27 @@
+.parent {
+    width: 100%;
+    overflow: auto;
+}
+
+.childGraph {
+    float: left;
+    width: 75%;
+}
+
+
+.childBox {
+    float: left;
+    width: 25%;
+}
+
+.componentPadding{
+    padding: 20px 20px 10px 20px;
+}
+
+.graphLeftPadding{
+    padding: 0px 0px 0px 15px;
+}
+
+.boxRightPadding{
+    padding: 0px 15px 0px 0px;
+}

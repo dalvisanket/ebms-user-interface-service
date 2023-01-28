@@ -21,6 +21,14 @@ class MeterReadingService {
     getMeterReadingsForYear(meter_id,consumer_id){
         return axios.get(REST_APT_URL+"/get-meter-readings-for-year/"+meter_id+"/"+consumer_id);
     }
+
+    getAssociationFromConsumerId(consumer_id) {
+        return axios.get(REST_APT_URL + "/get-consumer-meter-association/consumer-id/"+consumer_id);
+    }
+
+    getAssociationFromMeterId(meter_id) {
+        return axios.get(REST_APT_URL + "/get-consumer-meter-association/meter-id/"+meter_id);
+    }
 }
 
 export default new MeterReadingService()

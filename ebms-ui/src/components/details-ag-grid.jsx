@@ -5,12 +5,13 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {Dropdown} from "react-bootstrap";
 
-export default class Details extends Component{
+export default class DetailsAgGrid extends Component{
 
 
     state ={
         rowData:[],
-        columnDefs:[]
+        columnDefs:[],
+        aggridDataType:null
     };
 
     defaultColumnConfig(){
@@ -24,6 +25,7 @@ export default class Details extends Component{
     }
 
     componentDidMount() {
+        this.setState({aggridDataType:'consumer'})
         MeterReadingService.getAllConsumers().then((response) =>{
             this.setState({rowData : response.data});
             const keys = Object.keys(response.data[0]);
@@ -32,6 +34,7 @@ export default class Details extends Component{
     }
 
     getConsumerData =() =>{
+        this.setState({aggridDataType : 'consumer'})
         MeterReadingService.getAllConsumers().then((response) =>{
             this.setState({rowData : response.data});
             const keys = Object.keys(response.data[0]);
@@ -42,6 +45,7 @@ export default class Details extends Component{
     }
 
     getMeterData = () =>{
+        this.setState({aggridDataType : 'meter'})
         MeterReadingService.getAllMeters().then((response) =>{
             this.setState({rowData : response.data});
             const keys = Object.keys(response.data[0]);
@@ -51,13 +55,15 @@ export default class Details extends Component{
         });
     }
 
-    onCellClicked = (params: CellClickedEvent) => console.log(params.data);
+    onCellClicked = (params: CellClickedEvent) => {
+        this.props.onDataChange(this.state.aggridDataType,params.data)
+    };
 
     render() {
 
         return (
-            <div className="ag-theme-alpine" style={{height:500,padding: "10px 10px 10px 10px"}}>
-                <Dropdown style={{padding: "10px 0px 10px 0px"}}>
+            <div className="shadow-lg componentPadding" >
+                <Dropdown style={{padding: "0px 0px 10px 0px"}}>
                     <Dropdown.Toggle variant="outline-secondary" size="sm" id="dropdown-info">
                         Select Data
                     </Dropdown.Toggle>
@@ -67,9 +73,9 @@ export default class Details extends Component{
                         <Dropdown.Item onClick={this.getMeterData}>Meter Data</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-
-                <AgGridReact onCellClicked={this.onCellClicked} rowData={this.state.rowData} columnDefs={this.state.columnDefs} defaultColDef={this.defaultColumnConfig()} />
-
+                <div className="ag-theme-alpine" style={{height:500}}>
+                    <AgGridReact onCellClicked={this.onCellClicked} rowData={this.state.rowData} columnDefs={this.state.columnDefs} defaultColDef={this.defaultColumnConfig()} />
+                </div>
             </div>
         );
     }

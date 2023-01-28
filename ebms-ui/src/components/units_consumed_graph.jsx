@@ -5,7 +5,7 @@ import MeterReadingService from "../services/meter-reading-service";
 import {Dropdown} from "react-bootstrap";
 
 
-export default class Consumer_Graph extends Component{
+export default class Units_consumed_graph extends Component{
 
 
     state ={
@@ -15,15 +15,11 @@ export default class Consumer_Graph extends Component{
         labels:[],
         placeHolderLabels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
         lineGraphRef:{},
+        heading_label:[],
+        consumer_id:this.props.cosumer_id,
+        meter_id:this.props.meter_id
     };
 
-    constructor() {
-        super();
-        MeterReadingService.getMeterReadingsForYear(65654555,98310466).then((response) =>{
-            this.setState({years:Object.keys(response.data)});
-            this.setState({allMeterReadingData:response.data});
-        });
-    }
 
     updateGraphData = (year) =>{
         const meterReadingForYear = this.state.allMeterReadingData[year.year];
@@ -37,14 +33,28 @@ export default class Consumer_Graph extends Component{
 
         this.setState({graphData : unitsConsumed})
         this.setState({labels : newlabel})
+        let heading = "Units Consumed in " + year.year
+        this.setState({heading_label: heading})
         this.state.lineGraphRef.update();
+    }
+
+    loadGraphData=(consumer_id, meter_id)=>{
+        MeterReadingService.getMeterReadingsForYear(meter_id,consumer_id).then((response) =>{
+            this.setState({years:Object.keys(response.data)});
+            this.setState({allMeterReadingData:response.data});
+        });
+
+    }
+
+    componentDidMount() {
+        this.loadGraphData(this.state.consumer_id,this.state.meter_id);
     }
 
 
     render() {
         return(
-            <div style={{padding: "40px 10px 10px 10px"}}>
-                <Dropdown style={{padding: "10px 0px 10px 0px"}}>
+            <div className="shadow-lg" style={{padding: "10px 10px 10px 10px"}}>
+                <Dropdown style={{padding: "0px 0px 10px 0px"}}>
                     <Dropdown.Toggle variant="outline-secondary" size="sm" id="dropdown-info">
                         Select Year
                     </Dropdown.Toggle>
@@ -59,7 +69,7 @@ export default class Consumer_Graph extends Component{
                     labels:this.state.labels,
                     datasets:[
                         {
-                            label:"Units Consumed",
+                            label:this.state.heading_label,
                             fill:true,
                             data:this.state.graphData,
                             tension:0.3,
@@ -67,6 +77,7 @@ export default class Consumer_Graph extends Component{
                     ]
                 }}
                 options={{
+                    aspectRatio:3,
                     title:{
                         display:true,
                         text:"Units Consumed"
